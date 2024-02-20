@@ -44,7 +44,7 @@ if __name__ == "__main__":
         '*.msftconnecttest.com', '*.nature.com', '*.oclc.org', '*.proquest.com', 
         '*.researchgate.net', '*.sciencedirect.com', '*.sciencemag.org', 
         '*.springer.com', '*.tandfonline.com', '*.uni-trier.de', '*.webofknowledge.com', 
-        '*.wiley.com'] + (domain for domain in rules) + '/]tls://dns.pub tls://dns.alidns.com\''
+        '*.wiley.com'] + [domain for domain in rules]) + '/]tls://dns.pub tls://dns.alidns.com\''
 
     out = headline + [formatted_rules]
 
