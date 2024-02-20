@@ -11,65 +11,16 @@ import os
 import time
 
 # 默认来源 git@github.com:felixonmars/dnsmasq-china-list.git, 可能需要代理
-confurl = 'https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/accelerated-domains.china.conf'
-
+confurl = ''
 if __name__ == "__main__":
     conffile = 'accelerated-domains.china.conf'
     sorlfile = 'white-list.sorl'
     rules = set()
-    up_time=time.ctime()
+    up_time = time.ctime()
     headline = ['[SwitchyOmega Conditions]\n',
                 '; Require: SwitchyOmega >= 2.3.2\n',
                 '; Update @ {}\n'.format(up_time),
-                '\n',
-                '; cn域名都不走代理\n',
-                '*.cn\n',
-                '\n',
-                '; 局域网IP不走代理\n',
-                '10.*.*.*\n',
-                '172.16.*.*\n',
-                '172.17.*.*\n',
-                '172.18.*.*\n',
-                '172.19.*.*\n',
-                '172.20.*.*\n',
-                '172.21.*.*\n',
-                '172.22.*.*\n',
-                '172.23.*.*\n',
-                '172.24.*.*\n',
-                '172.25.*.*\n',
-                '172.26.*.*\n',
-                '172.27.*.*\n',
-                '172.28.*.*\n',
-                '172.29.*.*\n',
-                '172.30.*.*\n',
-                '172.31.*.*\n',
-                '169.254.*.*\n',
-                '192.168.*.*\n',
-                '\n',
-                '; 教育网\n',
-                '*.acm.org\n',
-                '*.dblp.org\n',
-                '*.ebscohost.com\n',
-                '*.edu\n',
-                '*.edu.*\n',
-                '*.engineeringvillage.com\n',
-                '*.ieee.org\n',
-                '*.jstor.org\n',
-                '*.lexis.com\n',
-                '*.msftconnecttest.com\n',
-                '*.nature.com\n',
-                '*.oclc.org\n',
-                '*.proquest.com\n',
-                '*.researchgate.net\n',
-                '*.sciencedirect.com\n',
-                '*.sciencemag.org\n',
-                '*.springer.com\n',
-                '*.tandfonline.com\n',
-                '*.uni-trier.de\n',
-                '*.webofknowledge.com\n',
-                '*.wiley.com\n',
-                '\n',
-                '; 常规列表\n']
+                '\n']
 
     r = requests.get(confurl)
     with open(conffile, 'wb') as f:
@@ -77,13 +28,24 @@ if __name__ == "__main__":
 
     with open(conffile, 'r') as f:
         for line in f.readlines():
-            if line[0] == '#':
+            if line.startswith('#'):
                 continue
-            rules.add(re.sub(r'server=/(\S+)/\d+\.\d+\.\d+\.\d+', r'*.\1', line))
+            match = re.search(r'server=/([^/]+)/', line)
+            if match:
+                domain = match.group(1)
+                rules.add('*.' + domain)
 
-    rules = list(rules)
-    rules.sort()
-    out = [*headline, *rules]
+    rules = sorted(rules)  # 按字母顺序排序规则
+    # 用转义的反斜杠连接教育网和一般规则，以实现单行格式
+    formatted_rules = '[/' + '\\'.join([
+        '*.cn', '*.acm.org', '*.dblp.org', '*.ebscohost.com', '*.edu', '*.edu.*', 
+        '*.engineeringvillage.com', '*.ieee.org', '*.jstor.org', '*.lexis.com', 
+        '*.msftconnecttest.com', '*.nature.com', '*.oclc.org', '*.proquest.com', 
+        '*.researchgate.net', '*.sciencedirect.com', '*.sciencemag.org', 
+        '*.springer.com', '*.tandfonline.com', '*.uni-trier.de', '*.webofknowledge.com', 
+        '*.wiley.com'] + ['*.' + domain for domain in rules]) + '/]TLS://1 TLS://2\n'
+
+    out = headline + [formatted_rules]
 
     with open(sorlfile, 'w') as f:
         f.writelines(out)
