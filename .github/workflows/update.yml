@@ -1,9 +1,10 @@
-# This is a basic workflow to help you get started with Actions
-
 name: 'Update Bot'
- 
+
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - master
   schedule:
     - cron: '10 10 * * *'
     
@@ -11,23 +12,23 @@ jobs:
   bot:
     runs-on: ubuntu-latest
     steps:
-      - name: 'Checkout Ubuntu'
-        uses: actions/checkout@v1
+      - name: 'Checkout Code'
+        uses: actions/checkout@v2
       - name: 'Set up Python'
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v2
         with:
-          python-version: 3.8
+          python-version: '3.8'
       - name: 'Install dependencies'
         run: pip install requests
-      - name: 'update'
+      - name: 'Run Update Script'
         run: python3 ./update.py
-      - name: 'commit'
+      - name: 'Commit Changes'
         run: |
-          git config --global user.email 30486766+entr0pia@users.noreply.github.com
-          git config --global user.name entr0pia
-          git add *
+          git config --global user.email "30486766+entr0pia@users.noreply.github.com"
+          git config --global user.name "entr0pia"
+          git add .
           git commit -m "update by bot"
-      - name: Push changes
+      - name: 'Push Changes'
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
