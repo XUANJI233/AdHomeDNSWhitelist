@@ -11,7 +11,8 @@ import os
 import time
 
 # 默认来源 git@github.com:felixonmars/dnsmasq-china-list.git, 可能需要代理
-confurl = ''
+confurl = 'https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/accelerated-domains.china.conf'
+
 if __name__ == "__main__":
     conffile = 'accelerated-domains.china.conf'
     sorlfile = 'white-list.sorl'
