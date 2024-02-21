@@ -39,7 +39,7 @@ if __name__ == "__main__":
     rules = sorted(rules)  # 按字母顺序排序规则
     # 用转义的反斜杠连接教育网和一般规则，以实现单行格式
     formatted_rules = '    - \'[/' + '/'.join([
-        '*.cn', '*.acm.org', '*.dblp.org', '*.ebscohost.com', '*.edu', '*.edu.*', 
+        '*.cn', '*.acm.org', '*.dblp.org', '*.ebscohost.com', '*.edu', 
         '*.engineeringvillage.com', '*.ieee.org', '*.jstor.org', '*.lexis.com', 
         '*.msftconnecttest.com', '*.nature.com', '*.oclc.org', '*.proquest.com', 
         '*.researchgate.net', '*.sciencedirect.com', '*.sciencemag.org', 
