@@ -1,5 +1,5 @@
 
-# SwitchyOmega-Whitelist
+# AdHomeDNSWhitelist
 适用于 AdGuard Home 的中国网站白名单,使用脚本添加进`AdGuardHome.yaml`,因为使用配置文件设置的上游dns会失效。
 
 参考脚本
@@ -17,7 +17,7 @@ url_prefixes=(
 "https://ghproxy.com/https://raw.githubusercontent.com/"
 "https://gh-proxy.com/https://raw.githubusercontent.com/")
 
-file_path="XUANJI233/SwitchyOmega-Whitelist/master/white-list.sorl"
+file_path="XUANJI233/AdHomeDNSWhitelist/master/white-list.sorl"
 
 # 使用curl下载文件，如果失败则尝试其他URL
 download_success=false
@@ -57,13 +57,13 @@ sudo mv temp.txt "$config_file_path"
 
 
     ```
-    https://raw.githubusercontent.com/XUANJI233/SwitchyOmega-Whitelist/master/white-list.sorl
+    https://raw.githubusercontent.com/XUANJI233/AdHomeDNSWhitelist/master/white-list.sorl
     ```
     
 代理加速 (一个一个试):
 
-> 1. https://ghproxy.com/https://raw.githubusercontent.com/XUANJI233/SwitchyOmega-Whitelist/master/white-list.sorl
+> 1. https://ghproxy.com/https://raw.githubusercontent.com/XUANJI233/AdHomeDNSWhitelist/master/white-list.sorl
   
-> 2. https://mirror.ghproxy.com/https://raw.githubusercontent.com/XUANJI233/SwitchyOmega-Whitelist/master/white-list.sorl
+> 2. https://mirror.ghproxy.com/https://raw.githubusercontent.com/XUANJI233/AdHomeDNSWhitelist/master/white-list.sorl
    
 > 3. https://ghproxy.net/https://raw.githubusercontent.com/XUANJI233/SwitchyOmega-Whitelist/master/white-list.sorl
