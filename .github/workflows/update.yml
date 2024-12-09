@@ -8,6 +8,10 @@ on:
   schedule:
     - cron: '10 10 * * *'  # 每天 10:10 UTC
 
+# 添加权限配置
+permissions:
+  contents: write
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
